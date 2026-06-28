@@ -91,3 +91,17 @@ The script `train_topological.py` demonstrates how to train a `DeepSheafNetwork`
 ```bash
 python train_topological.py
 ```
+
+## Sheaf Neural Cellular Automata (SheafNCA)
+
+The `SheafNCALayer` combines the geometric rigor of Cellular Sheaves with the local update rules of Cellular Automata. It uses an MLP to learn local transitions guided by sheaf residuals, allowing for complex shape reconstruction and maintenance.
+
+## Spectral Topological Loss
+
+In `spectral_topo.py`, we implement a differentiable spectral gap calculation for the Sheaf Laplacian. This loss encourages the network to learn a globally consistent and connected sheaf structure, serving as a powerful regularizer for topological tasks.
+
+### Running Reconstruction Task
+
+```bash
+python train_reconstruction.py
+```
