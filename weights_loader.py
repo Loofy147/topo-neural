@@ -1,41 +1,57 @@
 import os
 import numpy as np
 import torch
-from kaggle_utils import download_manifold_data
+from kaggle_utils import download_all_resources
 
 class ManifoldLoader:
-    def __init__(self, directory='kaggle_data/stratos_manifold'):
-        download_manifold_data()
+    """
+    Enhanced utility to load weights from multiple Stratos/Omega/FSO Manifold datasets.
+    """
+    def __init__(self, source='stratos', directory=None):
+        download_all_resources()
 
-        self.directory = directory
+        sources = {
+            'stratos': 'kaggle_data/stratos_manifold',
+            'omega': 'kaggle_data/omega_manifold',
+            'fso': 'kaggle_data/fso_manifold'
+        }
+
+        base_dir = directory or sources.get(source)
+        if not base_dir:
+            raise ValueError(f"Unknown source: {source}")
+
         # Find the actual directory containing .npy files
-        found_dir = None
-        for root, dirs, files in os.walk('kaggle_data'):
-            if any(f.endswith('.npy') for f in files):
-                found_dir = root
-                break
+        self.directory = self._find_npy_dir(base_dir)
+        print(f"[{source.upper()} LOADER] Using directory: {self.directory}")
 
-        if found_dir:
-            self.directory = found_dir
-            print(f"Manifold data found at: {self.directory}")
-        else:
-            raise FileNotFoundError(f"Could not find manifold data directory containing .npy files in kaggle_data")
-
-        self.weight_files = sorted([f for f in os.listdir(self.directory) if f.startswith('weight_math')])
-        self.lib_files = sorted([f for f in os.listdir(self.directory) if f.startswith('lib_logic_math')])
+        self.weight_files = sorted([f for f in os.listdir(self.directory) if f.startswith('weight_')])
+        self.lib_files = sorted([f for f in os.listdir(self.directory) if f.startswith('lib_')])
         self.ptr = 0
+
+    def _find_npy_dir(self, start_path):
+        for root, dirs, files in os.walk(start_path):
+            if any(f.endswith('.npy') for f in files):
+                return root
+        raise FileNotFoundError(f"No .npy files found in {start_path}")
 
     def load_weights(self, num_weights, edge_dim=32, node_dim=32):
         end = min(self.ptr + num_weights, len(self.weight_files))
         actual_num = end - self.ptr
 
-        if actual_num < num_weights:
-            print(f"Warning: Only {actual_num} weights available from index {self.ptr}")
-
         weights = []
         for i in range(self.ptr, end):
             data = np.load(os.path.join(self.directory, self.weight_files[i]))
-            weights.append(data.reshape(edge_dim, node_dim))
+            # Flatten then reshape to fit requested dimensions
+            flat_data = data.flatten()
+            target_size = edge_dim * node_dim
+            if flat_data.size >= target_size:
+                reshaped = flat_data[:target_size].reshape(edge_dim, node_dim)
+            else:
+                # Pad with zeros if necessary
+                padded = np.zeros(target_size)
+                padded[:flat_data.size] = flat_data
+                reshaped = padded.reshape(edge_dim, node_dim)
+            weights.append(reshaped)
 
         self.ptr = end
 
@@ -53,6 +69,14 @@ class ManifoldLoader:
         libs = []
         for i in range(num_libs):
             data = np.load(os.path.join(self.directory, self.lib_files[i]))
-            libs.append(data.reshape(edge_dim, node_dim))
+            flat_data = data.flatten()
+            target_size = edge_dim * node_dim
+            if flat_data.size >= target_size:
+                reshaped = flat_data[:target_size].reshape(edge_dim, node_dim)
+            else:
+                padded = np.zeros(target_size)
+                padded[:flat_data.size] = flat_data
+                reshaped = padded.reshape(edge_dim, node_dim)
+            libs.append(reshaped)
 
         return torch.tensor(np.array(libs), dtype=torch.float32)
