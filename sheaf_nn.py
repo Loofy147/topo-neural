@@ -14,6 +14,17 @@ class SheafDiffusionLayer(nn.Module):
         self.W_maps = nn.Parameter(torch.randn(2 * self.num_edges, self.de, self.d))
         self.register_buffer('edge_index', torch.tensor(edges).t().contiguous())
 
+    def load_from_manifold(self, loader):
+        """
+        Initializes W_maps using weights from the ManifoldLoader.
+        """
+        manifold_weights = loader.load_weights(2 * self.num_edges, edge_dim=self.de, node_dim=self.d)
+        if manifold_weights.shape == self.W_maps.shape:
+            self.W_maps.data.copy_(manifold_weights)
+            print(f"Successfully loaded {2 * self.num_edges} manifold weights into W_maps.")
+        else:
+            print(f"Warning: Manifold weight shape {manifold_weights.shape} does not match W_maps shape {self.W_maps.shape}.")
+
     def forward(self, H):
         batch_size = H.size(0)
         W_src = self.W_maps[0::2]
@@ -110,6 +121,14 @@ class DeepSheafNetwork(nn.Module):
                 SheafNCALayer(num_nodes, edges, node_dim, edge_dim)
                 for _ in range(num_layers)
             ])
+
+    def load_from_manifold(self, loader):
+        """
+        Initializes all layers using weights from the ManifoldLoader.
+        """
+        for i, layer in enumerate(self.layers):
+            print(f"Loading manifold weights for layer {i}...")
+            layer.load_from_manifold(loader)
 
     def forward(self, H):
         for layer in self.layers:
