@@ -49,3 +49,33 @@ python main.py
 -   **Module A (The Guard)**: Fast Bitwise Topological Invariants.
 -   **Module B (The Router)**: Sparse Kronecker Sheaf Laplacian.
 -   **Module C (The Engine)**: Mass-Regulated Generative Loop.
+
+## Trainable Cellular Sheaf Neural Network (CSNN)
+
+This module implements a Trainable Cellular Sheaf Neural Network using PyTorch.
+
+### Features
+- **Vertex & Edge Stalks**: High-dimensional representations for nodes and edges.
+- **Learned Restriction Maps**: Parameterized linear maps defining connections.
+- **Optimized Sheaf Diffusion**: Vectorized forward pass using scatter-gather operations.
+- **Stiefel Manifold Projection**: Optional constraint to ensure orthogonal restriction maps for training stability.
+
+### Usage
+
+```python
+from sheaf_nn import CellularSheafNN
+import torch
+
+num_nodes = 3
+edges = [(0, 1), (1, 2), (2, 0)]
+model = CellularSheafNN(num_nodes, edges, node_dim=4, edge_dim=2)
+
+H = torch.randn(1, num_nodes, 4)
+H_new = model(H)
+```
+
+### Running Tests
+
+```bash
+python test_sheaf_nn.py
+```
