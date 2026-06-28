@@ -79,3 +79,15 @@ H_new = model(H)
 ```bash
 python test_sheaf_nn.py
 ```
+
+## Differentiable Topological Constraints
+
+The module `topo_torch.py` provides differentiable implementations of topological invariants like the Euler Characteristic. This allows training neural networks (like the CSNN) to satisfy specific topological targets using standard backpropagation.
+
+### Training example
+
+The script `train_topological.py` demonstrates how to train a `DeepSheafNetwork` to generate a grid that satisfies a target Euler Characteristic and target mass.
+
+```bash
+python train_topological.py
+```
