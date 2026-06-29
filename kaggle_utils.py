@@ -1,8 +1,11 @@
+
+from kaggle.api.kaggle_api_extended import KaggleApi
 import os
 import zipfile
-from kaggle.api.kaggle_api_extended import KaggleApi
+import time
 
-def download_dataset(dataset, path):
+
+def download_dataset(dataset, path, retries=3):
     if os.path.exists(path) and len(os.listdir(path)) > 0:
         print(f"Data already exists at {path}. Skipping download.")
         return True
@@ -11,9 +14,19 @@ def download_dataset(dataset, path):
     api = KaggleApi()
     api.authenticate()
     os.makedirs(path, exist_ok=True)
-    api.dataset_download_files(dataset, path=path, unzip=True)
-    print(f"Download of {dataset} complete.")
-    return True
+
+    for i in range(retries):
+        try:
+            api.dataset_download_files(dataset, path=path, unzip=True)
+            print(f"Download of {dataset} complete.")
+            return True
+        except Exception as e:
+            print(f"Attempt {i+1} failed to download {dataset}: {e}")
+            if i < retries - 1:
+                time.sleep(5)
+            else:
+                raise e
+    return False
 
 def download_manifold_data():
     return download_dataset('hichambedrani/stratos-manifold-v4', './kaggle_data/stratos_manifold')
@@ -29,5 +42,33 @@ def download_all_resources():
     for ds, path in resources:
         download_dataset(ds, path)
 
+class KaggleSearch:
+    """
+    Search utility for Kaggle Datasets and Models.
+    """
+    def __init__(self):
+        self.api = KaggleApi()
+        self.api.authenticate()
+
+    def search_datasets(self, query):
+        print(f"Searching for datasets matching: {query}")
+        datasets = self.api.dataset_list(search=query)
+        for ds in datasets:
+            print(f"Dataset: {ds.ref} | Title: {ds.title}")
+        return datasets
+
+    def search_models(self, query):
+        print(f"Searching for models matching: {query}")
+        # Note: model_list might have different parameters in different API versions
+        try:
+            models = self.api.model_list(search=query)
+            for model in models:
+                print(f"Model: {model.ownerSlug}/{model.slug} | Title: {model.title}")
+            return models
+        except AttributeError:
+            print("Model search not supported in this Kaggle API version.")
+            return []
+
 if __name__ == "__main__":
-    download_all_resources()
+    search = KaggleSearch()
+    search.search_datasets("manifold")

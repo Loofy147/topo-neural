@@ -20,3 +20,22 @@ def monitor_model_health(model):
             total_norm += param_norm.item() ** 2
     total_norm = total_norm ** 0.5
     return total_norm
+
+class WandbLogger:
+    def __init__(self, project_name="topo-neural", config=None):
+        try:
+            import wandb
+            self.wandb = wandb
+            self.wandb.init(project=project_name, config=config)
+            self.enabled = True
+        except ImportError:
+            print("Wandb not installed. Logging disabled.")
+            self.enabled = False
+
+    def log(self, metrics):
+        if self.enabled:
+            self.wandb.log(metrics)
+
+    def finish(self):
+        if self.enabled:
+            self.wandb.finish()
