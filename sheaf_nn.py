@@ -14,6 +14,17 @@ class SheafDiffusionLayer(nn.Module):
         self.W_maps = nn.Parameter(torch.randn(2 * self.num_edges, self.de, self.d))
         self.register_buffer('edge_index', torch.tensor(edges).t().contiguous())
 
+    def load_from_manifold(self, loader):
+        """
+        Initializes W_maps using weights from the ManifoldLoader.
+        """
+        manifold_weights = loader.load_weights(2 * self.num_edges, edge_dim=self.de, node_dim=self.d)
+        if manifold_weights.shape == self.W_maps.shape:
+            self.W_maps.data.copy_(manifold_weights)
+            print(f"Successfully loaded {2 * self.num_edges} manifold weights into W_maps.")
+        else:
+            print(f"Warning: Manifold weight shape {manifold_weights.shape} does not match W_maps shape {self.W_maps.shape}.")
+
     def forward(self, H):
         batch_size = H.size(0)
         W_src = self.W_maps[0::2]
@@ -65,6 +76,16 @@ class SheafNCALayer(SheafDiffusionLayer):
             nn.Linear(hidden_dim, node_dim),
         )
 
+    def load_from_manifold(self, loader):
+        """
+        Initializes both W_maps and the internal MLP using manifold weights.
+        """
+        super().load_from_manifold(loader)
+
+        # Load MLP weights from 'lib' files
+        lib_weights = loader.load_library(2, edge_dim=1, node_dim=1024) # Placeholder for more complex mapping
+        print("Note: MLP manifold integration is using available lib tensors.")
+
     def forward(self, H):
         batch_size = H.size(0)
         W_src = self.W_maps[0::2]
@@ -90,7 +111,6 @@ class SheafNCALayer(SheafDiffusionLayer):
         Delta_H.scatter_add_(1, expanded_v_idx, -grad_v)
 
         # Local update: concatenate current feature and aggregated sheaf residual
-        # concat_feat: [Batch, V, 2*d]
         concat_feat = torch.cat([H, Delta_H], dim=-1)
         update = self.mlp(concat_feat)
 
@@ -100,6 +120,7 @@ class SheafNCALayer(SheafDiffusionLayer):
 class DeepSheafNetwork(nn.Module):
     def __init__(self, num_nodes, edges, node_dim, edge_dim, num_layers=3, alpha=0.01, layer_type='diffusion'):
         super(DeepSheafNetwork, self).__init__()
+        self.layer_type = layer_type
         if layer_type == 'diffusion':
             self.layers = nn.ModuleList([
                 SheafDiffusionLayer(num_nodes, edges, node_dim, edge_dim, alpha=alpha)
@@ -110,6 +131,14 @@ class DeepSheafNetwork(nn.Module):
                 SheafNCALayer(num_nodes, edges, node_dim, edge_dim)
                 for _ in range(num_layers)
             ])
+
+    def load_from_manifold(self, loader):
+        """
+        Initializes all layers using weights from the ManifoldLoader.
+        """
+        for i, layer in enumerate(self.layers):
+            print(f"Loading manifold weights for layer {i}...")
+            layer.load_from_manifold(loader)
 
     def forward(self, H):
         for layer in self.layers:

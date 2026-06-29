@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+kaggle_data/
+*.txt
+*.npy
+dataset-metadata.json
