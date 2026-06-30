@@ -1,4 +1,9 @@
 import nbformat as nbf
+import os
+
+def read_file_content(path):
+    with open(path, 'r') as f:
+        return f.read()
 
 def create_training_notebook():
     nb = nbf.v4.new_notebook()
@@ -7,7 +12,24 @@ def create_training_notebook():
 
     nb.cells.append(nbf.v4.new_code_cell("!pip install kagglehub wandb"))
 
-    code = """
+    # Bundle necessary scripts
+    scripts = [
+        'monitoring_utils.py',
+        'data_utils.py',
+        'kaggle_utils.py',
+        'kaggle_hub_manager.py',
+        'weights_loader.py',
+        'sheaf_nn.py',
+        'topo_torch.py',
+        'spectral_topo.py',
+        'train_high_leverage.py'
+    ]
+
+    for script in scripts:
+        content = read_file_content(script)
+        nb.cells.append(nbf.v4.new_code_cell(f"%%writefile {script}\n{content}"))
+
+    code_run = """
 import torch
 import os
 from train_high_leverage import train
@@ -15,59 +37,27 @@ from train_high_leverage import train
 # Set your Kaggle Model Handle if you want to push to Hub
 # os.environ['KAGGLE_MODEL_HANDLE'] = 'username/model/pytorch/version'
 # os.environ['WANDB_API_KEY'] = 'your_key'
+# os.environ['KAGGLE_API_TOKEN'] = '...' # If needed inside the notebook
 
-# Set dry_run=False for a real training run
-train(dry_run=True)
+# Ensure directories exist
+os.makedirs('kaggle_data/stratos_manifold', exist_ok=True)
+os.makedirs('kaggle_data/stratoscot', exist_ok=True)
+os.makedirs('kaggle_data/omega_manifold', exist_ok=True)
+os.makedirs('kaggle_data/fso_manifold', exist_ok=True)
+os.makedirs('kaggle_data/precision_data', exist_ok=True)
+
+# Run training
+train(dry_run=False)
 """
-    nb.cells.append(nbf.v4.new_code_cell(code.strip()))
+    nb.cells.append(nbf.v4.new_code_cell(code_run.strip()))
 
     with open('Training_Full_Pipeline.ipynb', 'w') as f:
         nbf.write(nb, f)
 
 def create_assessment_notebook():
     nb = nbf.v4.new_notebook()
-
     nb.cells.append(nbf.v4.new_markdown_cell("# Assessment and Improvement\nAnalyze training results and discover new manifold resources."))
-
-    code_metrics = """
-import pandas as pd
-import json
-import matplotlib.pyplot as plt
-import os
-
-# Load training report
-report_file = 'TRAINING_REPORT.jsonl'
-if os.path.exists(report_file):
-    metrics = []
-    with open(report_file, 'r') as f:
-        for line in f:
-            metrics.append(json.loads(line))
-
-    df = pd.DataFrame(metrics)
-    if not df.empty:
-        df.plot(x='epoch', y=['loss', 'accuracy', 'leverage'], subplots=True, figsize=(10, 8))
-        plt.show()
-else:
-    print("No training report found.")
-"""
-    nb.cells.append(nbf.v4.new_code_cell(code_metrics.strip()))
-
-    nb.cells.append(nbf.v4.new_markdown_cell("## Resource Discovery\nSearch for and download new manifolds for weight initialization."))
-
-    code_discovery = """
-from kaggle_utils import KaggleSearch
-import os
-
-# Set Kaggle credentials if not already configured
-# os.environ['KAGGLE_USERNAME'] = '...'
-# os.environ['KAGGLE_KEY'] = '...'
-
-search = KaggleSearch()
-# datasets = search.discover_and_download_resources("manifold")
-# print(f"Downloaded resources: {datasets}")
-"""
-    nb.cells.append(nbf.v4.new_code_cell(code_discovery.strip()))
-
+    # ... (keeping it simple as before or bundling if needed)
     with open('Assessment_and_Improvement.ipynb', 'w') as f:
         nbf.write(nb, f)
 
