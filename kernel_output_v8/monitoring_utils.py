@@ -1,0 +1,40 @@
+import torch
+import numpy as np
+import os
+
+def calculate_leverage(accuracy, ber, weights_norm):
+    efficiency = 1.0 / (1.0 + weights_norm)
+    leverage = (accuracy * (1.0 - ber) * efficiency) * 100
+    return leverage
+
+def monitor_model_health(model):
+    total_norm = 0
+    for p in model.parameters():
+        if p.grad is not None:
+            param_norm = p.grad.data.norm(2)
+            total_norm += param_norm.item() ** 2
+    total_norm = total_norm ** 0.5
+    return total_norm
+
+class WandbLogger:
+    def __init__(self, project_name="topo-neural", config=None):
+        try:
+            import wandb
+            self.wandb = wandb
+            if os.environ.get('WANDB_API_KEY'):
+                self.wandb.init(project=project_name, config=config)
+                self.enabled = True
+            else:
+                print("WANDB_API_KEY not found. Wandb logging disabled.")
+                self.enabled = False
+        except ImportError:
+            print("Wandb not installed. Logging disabled.")
+            self.enabled = False
+
+    def log(self, metrics):
+        if self.enabled:
+            self.wandb.log(metrics)
+
+    def finish(self):
+        if self.enabled:
+            self.wandb.finish()
