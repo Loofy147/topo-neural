@@ -5,8 +5,28 @@ def read_file_content(path):
     with open(path, 'r') as f:
         return f.read()
 
+def add_metadata(nb):
+    nb.metadata.kernelspec = {
+        "display_name": "Python 3",
+        "language": "python",
+        "name": "python3"
+    }
+    nb.metadata.language_info = {
+        "codemirror_mode": {
+            "name": "ipython",
+            "version": 3
+        },
+        "file_extension": ".py",
+        "mimetype": "text/x-python",
+        "name": "python",
+        "nbconvert_exporter": "python",
+        "pygments_lexer": "ipython3",
+        "version": "3.10.12"
+    }
+
 def create_training_notebook():
     nb = nbf.v4.new_notebook()
+    add_metadata(nb)
 
     nb.cells.append(nbf.v4.new_markdown_cell("# Unified Topology NCA: High-Leverage Training\nThis notebook implements the full training pipeline with GPU support, Kaggle Hub integration, and Topological Regularizers."))
 
@@ -34,11 +54,6 @@ import torch
 import os
 from train_high_leverage import train
 
-# Set your Kaggle Model Handle if you want to push to Hub
-# os.environ['KAGGLE_MODEL_HANDLE'] = 'username/model/pytorch/version'
-# os.environ['WANDB_API_KEY'] = 'your_key'
-# os.environ['KAGGLE_API_TOKEN'] = '...' # If needed inside the notebook
-
 # Ensure directories exist
 os.makedirs('kaggle_data/stratos_manifold', exist_ok=True)
 os.makedirs('kaggle_data/stratoscot', exist_ok=True)
@@ -56,8 +71,8 @@ train(dry_run=False)
 
 def create_assessment_notebook():
     nb = nbf.v4.new_notebook()
+    add_metadata(nb)
     nb.cells.append(nbf.v4.new_markdown_cell("# Assessment and Improvement\nAnalyze training results and discover new manifold resources."))
-    # ... (keeping it simple as before or bundling if needed)
     with open('Assessment_and_Improvement.ipynb', 'w') as f:
         nbf.write(nb, f)
 
