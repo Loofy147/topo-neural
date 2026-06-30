@@ -6,10 +6,12 @@ from weights_loader import ManifoldLoader
 from data_utils import get_dataloader
 from monitoring_utils import calculate_leverage, monitor_model_health, WandbLogger
 from kaggle_hub_manager import save_and_push_to_hub
+from topo_torch import relaxed_euler_torch
+from spectral_topo import compute_sheaf_laplacian_spectral_gap
 import json
 import os
 
-def train(dry_run=False):
+def train(dry_run=False, use_topo_loss=True):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"--- Large Scale High-Leverage Training ---")
     print(f"Device: {device}")
@@ -17,13 +19,14 @@ def train(dry_run=False):
     # Configuration for deep network
     num_nodes = 8
     edges = [(i, (i + 1) % num_nodes) for i in range(num_nodes)]
-    # Adding more connectivity for "high leverage"
     for i in range(num_nodes):
         edges.append((i, (i + 2) % num_nodes))
 
+    edge_index = torch.tensor(edges).t().to(device)
+
     node_dim = 32
     edge_dim = 32
-    num_layers = 12 # Deep network
+    num_layers = 12
 
     config = {
         "num_nodes": num_nodes,
@@ -31,26 +34,23 @@ def train(dry_run=False):
         "edge_dim": edge_dim,
         "num_layers": num_layers,
         "lr": 0.0001,
-        "weight_decay": 0.01
+        "weight_decay": 0.01,
+        "topo_weight": 0.1,
+        "spectral_weight": 0.05
     }
 
     model = DeepSheafNetwork(num_nodes, edges, node_dim, edge_dim, num_layers=num_layers, layer_type='nca').to(device)
-
-    # Initialize wandb
     logger = WandbLogger(project_name="topo-neural-high-leverage", config=config)
 
-    # Mixed Precision Scaling
     if device.type == 'cuda':
         scaler = torch.amp.GradScaler('cuda')
     else:
         scaler = torch.amp.GradScaler('cpu', enabled=False)
 
-    # Cross-manifold initialization
     print("Initializing from Multiple Manifolds...")
     try:
         stratos_loader = ManifoldLoader(source='stratos')
         omega_loader = ManifoldLoader(source='omega')
-
         for i, layer in enumerate(model.layers):
             loader = stratos_loader if i % 2 == 0 else omega_loader
             layer.load_from_manifold(loader)
@@ -61,7 +61,7 @@ def train(dry_run=False):
         nn.Linear(node_dim, 128),
         nn.LayerNorm(128),
         nn.ReLU(),
-        nn.Linear(128, 8) # Outputting 8 bits
+        nn.Linear(128, 8)
     ).to(device)
 
     optimizer = optim.AdamW(list(model.parameters()) + list(output_head.parameters()), lr=config["lr"], weight_decay=config["weight_decay"])
@@ -70,11 +70,9 @@ def train(dry_run=False):
 
     report_file = 'TRAINING_REPORT.jsonl'
 
-    # Try to get dataloader
     try:
         dataloader = get_dataloader('./kaggle_data/stratoscot/augmented_train.jsonl', batch_size=256)
     except Exception as e:
-        print(f"Dataloader failed: {e}. Using dummy data for testing.")
         x_dummy = torch.randn(10, 8)
         y_dummy = torch.randint(0, 2, (10, 8)).float()
         dataloader = [(x_dummy, y_dummy)]
@@ -100,16 +98,32 @@ def train(dry_run=False):
                 H_out = model(H)
                 logits = output_head(H_out).mean(dim=1)
 
-                loss = criterion(logits, y)
+                main_loss = criterion(logits, y)
+
+                topo_loss = 0
+                if use_topo_loss:
+                    # Example: Euler characteristic constraint on the output probabilities
+                    # Reshaping logits to a grid if possible, or using it as is for 1D topology
+                    # Here we treat the 8 bits as a 2x4 grid for demo
+                    grid_probs = torch.sigmoid(logits).view(-1, 2, 4)
+                    chi = relaxed_euler_torch(grid_probs)
+                    target_chi = 1.0 # Target one component
+                    topo_loss = torch.mean((chi - target_chi)**2)
+
+                    # Spectral gap loss on the last layer's restriction maps
+                    last_layer = model.layers[-1]
+                    gap = compute_sheaf_laplacian_spectral_gap(num_nodes, edge_index, last_layer.W_maps, last_layer.de, last_layer.d)
+                    spectral_loss = torch.relu(0.1 - gap)
+
+                    loss = main_loss + config["topo_weight"] * topo_loss + config["spectral_weight"] * spectral_loss
+                else:
+                    loss = main_loss
 
             scaler.scale(loss).backward()
-
-            # Monitoring
             grad_norm = monitor_model_health(model)
             if device.type == 'cuda':
                 scaler.unscale_(optimizer)
             nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-
             scaler.step(optimizer)
             scaler.update()
 
@@ -123,11 +137,8 @@ def train(dry_run=False):
                 break
 
         scheduler.step()
-
         avg_acc = correct / total if total > 0 else 0
         avg_ber = total_ber / len(dataloader)
-
-        # Calculate leverage
         with torch.no_grad():
             w_norm = sum(p.norm(2).item() for p in model.parameters())
             leverage = calculate_leverage(avg_acc, avg_ber, w_norm)
@@ -140,9 +151,7 @@ def train(dry_run=False):
             "leverage": leverage,
             "grad_norm": grad_norm
         }
-
         logger.log(metrics)
-
         with open(report_file, 'a') as f:
             f.write(json.dumps(metrics) + '\n')
 

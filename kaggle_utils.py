@@ -1,9 +1,9 @@
 
-from kaggle.api.kaggle_api_extended import KaggleApi
+
 import os
 import zipfile
 import time
-
+from kaggle.api.kaggle_api_extended import KaggleApi
 
 def download_dataset(dataset, path, retries=3):
     if os.path.exists(path) and len(os.listdir(path)) > 0:
@@ -59,7 +59,6 @@ class KaggleSearch:
 
     def search_models(self, query):
         print(f"Searching for models matching: {query}")
-        # Note: model_list might have different parameters in different API versions
         try:
             models = self.api.model_list(search=query)
             for model in models:
@@ -68,6 +67,16 @@ class KaggleSearch:
         except AttributeError:
             print("Model search not supported in this Kaggle API version.")
             return []
+
+    def discover_and_download_resources(self, query, base_path='./kaggle_data/discovered'):
+        print(f"Discovering and downloading resources for: {query}")
+        datasets = self.search_datasets(query)
+        downloaded_paths = []
+        for ds in datasets[:3]: # Limit to top 3
+            path = os.path.join(base_path, ds.ref.replace('/', '_'))
+            if download_dataset(ds.ref, path):
+                downloaded_paths.append(path)
+        return downloaded_paths
 
 if __name__ == "__main__":
     search = KaggleSearch()

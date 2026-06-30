@@ -9,7 +9,7 @@ class ManifoldLoader:
     Includes strict shape validation.
     """
     def __init__(self, source='stratos', directory=None):
-        download_all_resources()
+        # download_all_resources()
 
         sources = {
             'stratos': 'kaggle_data/stratos_manifold',
