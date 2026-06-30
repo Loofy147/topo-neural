@@ -1,0 +1,18 @@
+--- Large Scale High-Leverage Training ---
+Device: cpu
+WANDB_API_KEY not found. Wandb logging disabled.
+Initializing from Multiple Manifolds...
+[STRATOS LOADER] Using directory: kaggle_data/stratos_manifold
+Initialization from manifold failed: No .npy files found in kaggle_data/omega_manifold. Using random weights.
+Starting Epochs...
+Epoch 0: Loss=0.7559, Acc=0.00%, BER=0.5750, Leverage=0.0000
+Epoch 1: Loss=0.7515, Acc=0.00%, BER=0.5750, Leverage=0.0000
+Epoch 2: Loss=0.7473, Acc=0.00%, BER=0.5375, Leverage=0.0000
+Epoch 3: Loss=0.7436, Acc=10.00%, BER=0.5125, Leverage=0.0022
+Epoch 4: Loss=0.7410, Acc=10.00%, BER=0.5000, Leverage=0.0022
+Epoch 5: Loss=0.7390, Acc=10.00%, BER=0.4875, Leverage=0.0023
+Epoch 6: Loss=0.7374, Acc=10.00%, BER=0.4625, Leverage=0.0024
+Epoch 7: Loss=0.7363, Acc=10.00%, BER=0.4625, Leverage=0.0024
+Epoch 8: Loss=0.7356, Acc=10.00%, BER=0.4625, Leverage=0.0024
+Epoch 9: Loss=0.7353, Acc=10.00%, BER=0.4500, Leverage=0.0024
+High-Leverage Model Training Complete.

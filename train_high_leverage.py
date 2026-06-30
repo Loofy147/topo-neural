@@ -167,4 +167,4 @@ def train(dry_run=False, use_topo_loss=True):
     print("High-Leverage Model Training Complete.")
 
 if __name__ == "__main__":
-    train(dry_run=True)
+    train(dry_run=False)
