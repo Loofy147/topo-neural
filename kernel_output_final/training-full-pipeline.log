@@ -1,0 +1,211 @@
+[{"stream_name":"stderr","time":10.338537256,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":10.33949181,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":10.339500832,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":10.33950453,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":11.076033615,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":11.076073141,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":11.076076617,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":11.07607926,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":60.078142619,"data":"Installing compatible environment...\n"}
+,{"stream_name":"stdout","time":60.078187943,"data":"Looking in indexes: https://download.pytorch.org/whl/cu117\n"}
+,{"stream_name":"stdout","time":60.078192941,"data":"Requirement already satisfied: kaggle in /usr/local/lib/python3.12/dist-packages (2.0.1)\n"}
+,{"stream_name":"stdout","time":60.078196298,"data":"Collecting kaggle\n"}
+,{"stream_name":"stdout","time":60.078199294,"data":"  Downloading kaggle-2.2.3-py3-none-any.whl.metadata (16 kB)\n"}
+,{"stream_name":"stdout","time":60.078208521,"data":"Requirement already satisfied: kagglehub in /usr/local/lib/python3.12/dist-packages (1.0.0)\n"}
+,{"stream_name":"stdout","time":60.078211924,"data":"Collecting kagglehub\n"}
+,{"stream_name":"stdout","time":60.078214889,"data":"  Downloading kagglehub-1.0.2-py3-none-any.whl.metadata (40 kB)\n"}
+,{"stream_name":"stdout","time":60.078218039,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.1/40.1 kB 2.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":60.07822223,"data":"Requirement already satisfied: wandb in /usr/local/lib/python3.12/dist-packages (0.25.1)\n"}
+,{"stream_name":"stdout","time":60.078225284,"data":"Collecting wandb\n"}
+,{"stream_name":"stdout","time":60.07822818,"data":"  Downloading wandb-0.28.0-py3-none-manylinux_2_28_x86_64.whl.metadata (11 kB)\n"}
+,{"stream_name":"stdout","time":60.078231158,"data":"Requirement already satisfied: bleach in /usr/local/lib/python3.12/dist-packages (from kaggle) (6.3.0)\n"}
+,{"stream_name":"stdout","time":60.078234244,"data":"Requirement already satisfied: jupytext in /usr/local/lib/python3.12/dist-packages (from kaggle) (1.19.1)\n"}
+,{"stream_name":"stdout","time":60.078237314,"data":"Collecting kagglesdk\u003c1.0,\u003e=0.1.30 (from kaggle)\n"}
+,{"stream_name":"stdout","time":60.078240641,"data":"  Downloading kagglesdk-0.1.31-py3-none-any.whl.metadata (13 kB)\n"}
+,{"stream_name":"stdout","time":60.078243577,"data":"Requirement already satisfied: packaging in /usr/local/lib/python3.12/dist-packages (from kaggle) (26.2)\n"}
+,{"stream_name":"stdout","time":60.078246619,"data":"Requirement already satisfied: protobuf in /usr/local/lib/python3.12/dist-packages (from kaggle) (5.29.5)\n"}
+,{"stream_name":"stdout","time":60.078249574,"data":"Requirement already satisfied: python-dateutil in /usr/local/lib/python3.12/dist-packages (from kaggle) (2.9.0.post0)\n"}
+,{"stream_name":"stdout","time":60.07825258,"data":"Requirement already satisfied: python-dotenv in /usr/local/lib/python3.12/dist-packages (from kaggle) (1.2.2)\n"}
+,{"stream_name":"stdout","time":60.078264111,"data":"Requirement already satisfied: python-slugify in /usr/local/lib/python3.12/dist-packages (from kaggle) (8.0.4)\n"}
+,{"stream_name":"stdout","time":60.078266777,"data":"Requirement already satisfied: requests in /usr/local/lib/python3.12/dist-packages (from kaggle) (2.32.4)\n"}
+,{"stream_name":"stdout","time":60.078269241,"data":"Requirement already satisfied: tqdm in /usr/local/lib/python3.12/dist-packages (from kaggle) (4.67.3)\n"}
+,{"stream_name":"stdout","time":60.078271539,"data":"Requirement already satisfied: urllib3\u003e=1.15.1 in /usr/local/lib/python3.12/dist-packages (from kaggle) (2.5.0)\n"}
+,{"stream_name":"stdout","time":60.078275141,"data":"Requirement already satisfied: pyyaml in /usr/local/lib/python3.12/dist-packages (from kagglehub) (6.0.3)\n"}
+,{"stream_name":"stdout","time":60.078277525,"data":"Requirement already satisfied: click\u003e=8.2.0 in /usr/local/lib/python3.12/dist-packages (from wandb) (8.3.2)\n"}
+,{"stream_name":"stdout","time":60.078279877,"data":"Requirement already satisfied: gitpython!=3.1.29,\u003e=1.0.0 in /usr/local/lib/python3.12/dist-packages (from wandb) (3.1.46)\n"}
+,{"stream_name":"stdout","time":60.078282281,"data":"Requirement already satisfied: platformdirs in /usr/local/lib/python3.12/dist-packages (from wandb) (4.9.6)\n"}
+,{"stream_name":"stdout","time":60.078284599,"data":"Requirement already satisfied: pydantic\u003c3,\u003e=2.6 in /usr/local/lib/python3.12/dist-packages (from wandb) (2.12.3)\n"}
+,{"stream_name":"stdout","time":60.078287005,"data":"Requirement already satisfied: sentry-sdk\u003e=2.0.0 in /usr/local/lib/python3.12/dist-packages (from wandb) (2.57.0)\n"}
+,{"stream_name":"stdout","time":60.078289409,"data":"Requirement already satisfied: typing-extensions\u003c5,\u003e=4.8 in /usr/local/lib/python3.12/dist-packages (from wandb) (4.15.0)\n"}
+,{"stream_name":"stdout","time":60.078291846,"data":"Requirement already satisfied: gitdb\u003c5,\u003e=4.0.1 in /usr/local/lib/python3.12/dist-packages (from gitpython!=3.1.29,\u003e=1.0.0-\u003ewandb) (4.0.12)\n"}
+,{"stream_name":"stdout","time":60.078294426,"data":"Requirement already satisfied: annotated-types\u003e=0.6.0 in /usr/local/lib/python3.12/dist-packages (from pydantic\u003c3,\u003e=2.6-\u003ewandb) (0.7.0)\n"}
+,{"stream_name":"stdout","time":60.078296938,"data":"Requirement already satisfied: pydantic-core==2.41.4 in /usr/local/lib/python3.12/dist-packages (from pydantic\u003c3,\u003e=2.6-\u003ewandb) (2.41.4)\n"}
+,{"stream_name":"stdout","time":60.078299414,"data":"Requirement already satisfied: typing-inspection\u003e=0.4.2 in /usr/local/lib/python3.12/dist-packages (from pydantic\u003c3,\u003e=2.6-\u003ewandb) (0.4.2)\n"}
+,{"stream_name":"stdout","time":60.0783019,"data":"Requirement already satisfied: charset_normalizer\u003c4,\u003e=2 in /usr/local/lib/python3.12/dist-packages (from requests-\u003ekaggle) (3.4.7)\n"}
+,{"stream_name":"stdout","time":60.078304327,"data":"Requirement already satisfied: idna\u003c4,\u003e=2.5 in /usr/local/lib/python3.12/dist-packages (from requests-\u003ekaggle) (3.11)\n"}
+,{"stream_name":"stdout","time":60.078306721,"data":"Requirement already satisfied: certifi\u003e=2017.4.17 in /usr/local/lib/python3.12/dist-packages (from requests-\u003ekaggle) (2026.2.25)\n"}
+,{"stream_name":"stdout","time":60.07830919,"data":"Requirement already satisfied: webencodings in /usr/local/lib/python3.12/dist-packages (from bleach-\u003ekaggle) (0.5.1)\n"}
+,{"stream_name":"stdout","time":60.078311549,"data":"Requirement already satisfied: markdown-it-py\u003e=1.0 in /usr/local/lib/python3.12/dist-packages (from jupytext-\u003ekaggle) (4.0.0)\n"}
+,{"stream_name":"stdout","time":60.078313939,"data":"Requirement already satisfied: mdit-py-plugins in /usr/local/lib/python3.12/dist-packages (from jupytext-\u003ekaggle) (0.5.0)\n"}
+,{"stream_name":"stdout","time":60.078318985,"data":"Requirement already satisfied: nbformat in /usr/local/lib/python3.12/dist-packages (from jupytext-\u003ekaggle) (5.10.4)\n"}
+,{"stream_name":"stdout","time":60.078321557,"data":"Requirement already satisfied: six\u003e=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil-\u003ekaggle) (1.17.0)\n"}
+,{"stream_name":"stdout","time":60.078324029,"data":"Requirement already satisfied: text-unidecode\u003e=1.3 in /usr/local/lib/python3.12/dist-packages (from python-slugify-\u003ekaggle) (1.3)\n"}
+,{"stream_name":"stdout","time":60.078326454,"data":"Requirement already satisfied: smmap\u003c6,\u003e=3.0.1 in /usr/local/lib/python3.12/dist-packages (from gitdb\u003c5,\u003e=4.0.1-\u003egitpython!=3.1.29,\u003e=1.0.0-\u003ewandb) (5.0.3)\n"}
+,{"stream_name":"stdout","time":60.078330855,"data":"Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.12/dist-packages (from markdown-it-py\u003e=1.0-\u003ejupytext-\u003ekaggle) (0.1.2)\n"}
+,{"stream_name":"stdout","time":60.078333355,"data":"Requirement already satisfied: fastjsonschema\u003e=2.15 in /usr/local/lib/python3.12/dist-packages (from nbformat-\u003ejupytext-\u003ekaggle) (2.21.2)\n"}
+,{"stream_name":"stdout","time":60.078335832,"data":"Requirement already satisfied: jsonschema\u003e=2.6 in /usr/local/lib/python3.12/dist-packages (from nbformat-\u003ejupytext-\u003ekaggle) (4.26.0)\n"}
+,{"stream_name":"stdout","time":60.078338271,"data":"Requirement already satisfied: jupyter-core!=5.0.*,\u003e=4.12 in /usr/local/lib/python3.12/dist-packages (from nbformat-\u003ejupytext-\u003ekaggle) (5.9.1)\n"}
+,{"stream_name":"stdout","time":60.078340709,"data":"Requirement already satisfied: traitlets\u003e=5.1 in /usr/local/lib/python3.12/dist-packages (from nbformat-\u003ejupytext-\u003ekaggle) (5.15.0)\n"}
+,{"stream_name":"stdout","time":60.078343122,"data":"Requirement already satisfied: attrs\u003e=22.2.0 in /usr/local/lib/python3.12/dist-packages (from jsonschema\u003e=2.6-\u003enbformat-\u003ejupytext-\u003ekaggle) (26.1.0)\n"}
+,{"stream_name":"stdout","time":60.07834568,"data":"Requirement already satisfied: jsonschema-specifications\u003e=2023.03.6 in /usr/local/lib/python3.12/dist-packages (from jsonschema\u003e=2.6-\u003enbformat-\u003ejupytext-\u003ekaggle) (2025.9.1)\n"}
+,{"stream_name":"stdout","time":60.078348249,"data":"Requirement already satisfied: referencing\u003e=0.28.4 in /usr/local/lib/python3.12/dist-packages (from jsonschema\u003e=2.6-\u003enbformat-\u003ejupytext-\u003ekaggle) (0.37.0)\n"}
+,{"stream_name":"stdout","time":60.078350762,"data":"Requirement already satisfied: rpds-py\u003e=0.25.0 in /usr/local/lib/python3.12/dist-packages (from jsonschema\u003e=2.6-\u003enbformat-\u003ejupytext-\u003ekaggle) (0.30.0)\n"}
+,{"stream_name":"stdout","time":60.078353267,"data":"Downloading kaggle-2.2.3-py3-none-any.whl (111 kB)\n"}
+,{"stream_name":"stdout","time":60.078355483,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 111.5/111.5 kB 6.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":60.078358229,"data":"Downloading kagglehub-1.0.2-py3-none-any.whl (70 kB)\n"}
+,{"stream_name":"stdout","time":60.07836049,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 70.6/70.6 kB 5.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":60.078363015,"data":"Downloading wandb-0.28.0-py3-none-manylinux_2_28_x86_64.whl (26.8 MB)\n"}
+,{"stream_name":"stdout","time":60.078365237,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 26.8/26.8 MB 74.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":60.078370003,"data":"Downloading kagglesdk-0.1.31-py3-none-any.whl (255 kB)\n"}
+,{"stream_name":"stdout","time":60.078372434,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 255.7/255.7 kB 14.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":60.078375009,"data":"Installing collected packages: kagglesdk, wandb, kagglehub, kaggle\n"}
+,{"stream_name":"stdout","time":60.078377276,"data":"  Attempting uninstall: kagglesdk\n"}
+,{"stream_name":"stdout","time":60.078379467,"data":"    Found existing installation: kagglesdk 0.1.18\n"}
+,{"stream_name":"stdout","time":60.078381759,"data":"    Uninstalling kagglesdk-0.1.18:\n"}
+,{"stream_name":"stdout","time":60.078383934,"data":"      Successfully uninstalled kagglesdk-0.1.18\n"}
+,{"stream_name":"stdout","time":60.078386158,"data":"  Attempting uninstall: wandb\n"}
+,{"stream_name":"stdout","time":60.078388467,"data":"    Found existing installation: wandb 0.25.1\n"}
+,{"stream_name":"stdout","time":60.078390653,"data":"    Uninstalling wandb-0.25.1:\n"}
+,{"stream_name":"stdout","time":60.078392884,"data":"      Successfully uninstalled wandb-0.25.1\n"}
+,{"stream_name":"stdout","time":60.078395092,"data":"  Attempting uninstall: kagglehub\n"}
+,{"stream_name":"stdout","time":60.07839725,"data":"    Found existing installation: kagglehub 1.0.0\n"}
+,{"stream_name":"stdout","time":60.078399459,"data":"    Uninstalling kagglehub-1.0.0:\n"}
+,{"stream_name":"stdout","time":60.078401617,"data":"      Successfully uninstalled kagglehub-1.0.0\n"}
+,{"stream_name":"stdout","time":60.078403818,"data":"  Attempting uninstall: kaggle\n"}
+,{"stream_name":"stdout","time":60.078405964,"data":"    Found existing installation: kaggle 2.0.1\n"}
+,{"stream_name":"stdout","time":60.078408179,"data":"    Uninstalling kaggle-2.0.1:\n"}
+,{"stream_name":"stdout","time":60.078410353,"data":"      Successfully uninstalled kaggle-2.0.1\n"}
+,{"stream_name":"stdout","time":60.078412575,"data":"Successfully installed kaggle-2.2.3 kagglehub-1.0.2 kagglesdk-0.1.31 wandb-0.28.0\n"}
+,{"stream_name":"stderr","time":60.079212182,"data":"ERROR: Could not find a version that satisfies the requirement torch==2.0.0+cu117 (from versions: none)\n"}
+,{"stream_name":"stderr","time":60.079225123,"data":"ERROR: No matching distribution found for torch==2.0.0+cu117\n"}
+,{"stream_name":"stderr","time":60.079228933,"data":"\n"}
+,{"stream_name":"stderr","time":60.079232222,"data":"ERROR: Could not find a version that satisfies the requirement torch==2.0.0+cu117 (from versions: none)\n"}
+,{"stream_name":"stderr","time":60.079241416,"data":"ERROR: No matching distribution found for torch==2.0.0+cu117\n"}
+,{"stream_name":"stdout","time":67.575643577,"data":"Torch version: 2.10.0+cu128\n"}
+,{"stream_name":"stdout","time":67.575686967,"data":"Device: Tesla P100-PCIE-16GB, Compute Capability: 6.0\n"}
+,{"stream_name":"stderr","time":67.59719968,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":67.59725357,"data":"    Found GPU0 Tesla P100-PCIE-16GB which is of cuda capability 6.0.\n"}
+,{"stream_name":"stderr","time":67.597260893,"data":"    Minimum and Maximum cuda capability supported by this version of PyTorch is\n"}
+,{"stream_name":"stderr","time":67.597266271,"data":"    (7.0) - (12.0)\n"}
+,{"stream_name":"stderr","time":67.597271705,"data":"    \n"}
+,{"stream_name":"stderr","time":67.597276714,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":67.597281142,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":67.597303786,"data":"    Please install PyTorch with a following CUDA\n"}
+,{"stream_name":"stderr","time":67.59730665,"data":"    configurations:  12.6 following instructions at\n"}
+,{"stream_name":"stderr","time":67.59730885,"data":"    https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":67.597311196,"data":"    \n"}
+,{"stream_name":"stderr","time":67.597313333,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":67.597315623,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":67.597318014,"data":"Tesla P100-PCIE-16GB with CUDA capability sm_60 is not compatible with the current PyTorch installation.\n"}
+,{"stream_name":"stderr","time":67.597320437,"data":"The current PyTorch install supports CUDA capabilities sm_70 sm_75 sm_80 sm_86 sm_90 sm_100 sm_120.\n"}
+,{"stream_name":"stderr","time":67.597322745,"data":"If you want to use the Tesla P100-PCIE-16GB GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":67.597325137,"data":"\n"}
+,{"stream_name":"stderr","time":67.59732728,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":67.597329512,"data":"\n"}
+,{"stream_name":"stderr","time":67.597331623,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":67.597333882,"data":"    Found GPU0 Tesla P100-PCIE-16GB which is of cuda capability 6.0.\n"}
+,{"stream_name":"stderr","time":67.597336117,"data":"    Minimum and Maximum cuda capability supported by this version of PyTorch is\n"}
+,{"stream_name":"stderr","time":67.597338462,"data":"    (7.0) - (12.0)\n"}
+,{"stream_name":"stderr","time":67.597341519,"data":"    \n"}
+,{"stream_name":"stderr","time":67.597356886,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":67.597360558,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":67.59736475,"data":"    Please install PyTorch with a following CUDA\n"}
+,{"stream_name":"stderr","time":67.597368268,"data":"    configurations:  12.6 following instructions at\n"}
+,{"stream_name":"stderr","time":67.597372265,"data":"    https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":67.597376185,"data":"    \n"}
+,{"stream_name":"stderr","time":67.597379523,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":67.597382715,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":67.597386182,"data":"Tesla P100-PCIE-16GB with CUDA capability sm_60 is not compatible with the current PyTorch installation.\n"}
+,{"stream_name":"stderr","time":67.597389743,"data":"The current PyTorch install supports CUDA capabilities sm_70 sm_75 sm_80 sm_86 sm_90 sm_100 sm_120.\n"}
+,{"stream_name":"stderr","time":67.597393463,"data":"If you want to use the Tesla P100-PCIE-16GB GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":67.59739717,"data":"\n"}
+,{"stream_name":"stderr","time":67.597404923,"data":"  queued_call()\n"}
+,{"stream_name":"stdout","time":67.678944658,"data":"CUDA Test Failed: CUDA error: no kernel image is available for execution on the device\n"}
+,{"stream_name":"stdout","time":67.678975811,"data":"Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\n"}
+,{"stream_name":"stdout","time":67.67899609,"data":"CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\n"}
+,{"stream_name":"stdout","time":67.679000313,"data":"For debugging consider passing CUDA_LAUNCH_BLOCKING=1\n"}
+,{"stream_name":"stdout","time":67.679003743,"data":"Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n"}
+,{"stream_name":"stdout","time":67.679007021,"data":". Check if the torch build supports sm_60\n"}
+,{"stream_name":"stdout","time":67.879543898,"data":"Linked /kaggle/input/datasets/hichambedrani/stratos-manifold-v4 -\u003e kaggle_data/stratos_manifold\n"}
+,{"stream_name":"stdout","time":69.742675865,"data":"Linked /kaggle/input/datasets/hichambedrani/stratos-omega-manifold-v3 -\u003e kaggle_data/omega_manifold\n"}
+,{"stream_name":"stdout","time":69.742708095,"data":"Linked /kaggle/input/datasets/hichambedrani/stratoscot -\u003e kaggle_data/stratoscot\n"}
+,{"stream_name":"stdout","time":69.742713623,"data":"Linked /kaggle/input/datasets/hichambedrani/precision-system-v3-data -\u003e kaggle_data/precision_data\n"}
+,{"stream_name":"stdout","time":69.74271744,"data":"Linked /kaggle/input/datasets/hichambedrani/fso-manifold -\u003e kaggle_data/fso_manifold\n"}
+,{"stream_name":"stdout","time":69.75664406,"data":"Writing monitoring_utils.py\n"}
+,{"stream_name":"stdout","time":69.769546624,"data":"Writing data_utils.py\n"}
+,{"stream_name":"stdout","time":69.782690231,"data":"Writing kaggle_utils.py\n"}
+,{"stream_name":"stdout","time":69.796217008,"data":"Writing kaggle_hub_manager.py\n"}
+,{"stream_name":"stdout","time":69.810064422,"data":"Writing weights_loader.py\n"}
+,{"stream_name":"stdout","time":69.825390516,"data":"Writing sheaf_nn.py\n"}
+,{"stream_name":"stdout","time":69.838497494,"data":"Writing topo_torch.py\n"}
+,{"stream_name":"stdout","time":69.852576585,"data":"Writing spectral_topo.py\n"}
+,{"stream_name":"stdout","time":69.8682189,"data":"Writing train_high_leverage.py\n"}
+,{"stream_name":"stdout","time":70.918001907,"data":"--- Large Scale High-Leverage Training ---\n"}
+,{"stream_name":"stdout","time":70.918034651,"data":"Device: cuda\n"}
+,{"stream_name":"stdout","time":70.918038257,"data":"GPU error: CUDA error: no kernel image is available for execution on the device\n"}
+,{"stream_name":"stdout","time":70.918041106,"data":"Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\n"}
+,{"stream_name":"stdout","time":70.918043927,"data":"CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\n"}
+,{"stream_name":"stdout","time":70.918046599,"data":"For debugging consider passing CUDA_LAUNCH_BLOCKING=1\n"}
+,{"stream_name":"stdout","time":70.91804899,"data":"Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n"}
+,{"stream_name":"stdout","time":70.918051429,"data":". Falling back to CPU.\n"}
+,{"stream_name":"stdout","time":72.021951475,"data":"WANDB_API_KEY not found. Wandb logging disabled.\n"}
+,{"stream_name":"stdout","time":72.021979716,"data":"Initializing from Multiple Manifolds...\n"}
+,{"stream_name":"stdout","time":72.382107967,"data":"[STRATOS LOADER] Using directory: kaggle_data/stratos_manifold/stratos_manifold\n"}
+,{"stream_name":"stdout","time":72.659243857,"data":"[OMEGA LOADER] Using directory: kaggle_data/omega_manifold\n"}
+,{"stream_name":"stdout","time":72.659279587,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":72.864407967,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":72.86449969,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":72.864509731,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":73.370222875,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":73.370264882,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":73.370269455,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":73.37027261,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":73.764311048,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":73.764346629,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":73.764352834,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":73.764357841,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":74.143593173,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":74.143625197,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":74.143630924,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":74.143636547,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":74.497731975,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":74.497776121,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":74.497782436,"data":"Warning: Requested 32 weights but only found 27. Padding with random.\n"}
+,{"stream_name":"stdout","time":74.497787262,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":74.497791708,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":74.843597186,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":74.843627056,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":74.843633093,"data":"Warning: Requested 32 weights but only found 0. Padding with random.\n"}
+,{"stream_name":"stdout","time":74.843637749,"data":"Successfully loaded 32 manifold weights into W_maps.\n"}
+,{"stream_name":"stdout","time":74.843642145,"data":"Note: MLP manifold integration is using available lib tensors.\n"}
+,{"stream_name":"stdout","time":80.802889975,"data":"Starting Epochs...\n"}
+,{"stream_name":"stdout","time":84.875504277,"data":"Epoch 0: Loss=0.7751, Acc=0.06%, BER=0.5108, Leverage=0.0001\n"}
+,{"stream_name":"stdout","time":87.906623208,"data":"Epoch 1: Loss=0.7646, Acc=0.19%, BER=0.5106, Leverage=0.0002\n"}
+,{"stream_name":"stdout","time":90.703133891,"data":"Epoch 2: Loss=0.7556, Acc=0.37%, BER=0.4995, Leverage=0.0005\n"}
+,{"stream_name":"stdout","time":93.696654928,"data":"Epoch 3: Loss=0.7489, Acc=0.44%, BER=0.4747, Leverage=0.0006\n"}
+,{"stream_name":"stdout","time":96.596601233,"data":"Epoch 4: Loss=0.7452, Acc=0.87%, BER=0.4563, Leverage=0.0012\n"}
+,{"stream_name":"stdout","time":99.462365254,"data":"Epoch 5: Loss=0.7420, Acc=1.50%, BER=0.4469, Leverage=0.0021\n"}
+,{"stream_name":"stdout","time":102.405538363,"data":"Epoch 6: Loss=0.7389, Acc=1.75%, BER=0.4363, Leverage=0.0025\n"}
+,{"stream_name":"stdout","time":105.353991162,"data":"Epoch 7: Loss=0.7373, Acc=1.81%, BER=0.4358, Leverage=0.0026\n"}
+,{"stream_name":"stdout","time":108.304099204,"data":"Epoch 8: Loss=0.7372, Acc=1.75%, BER=0.4360, Leverage=0.0025\n"}
+,{"stream_name":"stdout","time":110.860004279,"data":"Epoch 9: Loss=0.7371, Acc=1.75%, BER=0.4383, Leverage=0.0025\n"}
+,{"stream_name":"stdout","time":110.860042005,"data":"High-Leverage Model Training Complete.\n"}
+,{"stream_name":"stderr","time":115.83466829,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":115.8347021,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":116.002648835,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":116.002675349,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":116.662105933,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":116.960681324,"data":"[NbConvertApp] Writing 63016 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":119.276269378,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":120.161069166,"data":"[NbConvertApp] Writing 451537 bytes to __results__.html\n"}
+]

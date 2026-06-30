@@ -1,0 +1,20 @@
+{
+  "id": "hichambedrani/training-full-pipeline",
+  "title": "Training Full Pipeline",
+  "code_file": "Training_Full_Pipeline.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "hichambedrani/stratos-manifold-v4",
+    "hichambedrani/stratoscot",
+    "hichambedrani/stratos-omega-manifold-v3",
+    "hichambedrani/fso-manifold",
+    "hichambedrani/precision-system-v3-data"
+  ],
+  "kernel_sources": [],
+  "competition_sources": []
+}
