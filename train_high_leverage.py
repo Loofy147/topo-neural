@@ -11,9 +11,9 @@ from spectral_topo import compute_sheaf_laplacian_spectral_gap
 import json
 import os
 
-def train(dry_run=False, use_topo_loss=True):
+def train(dry_run=False, use_topo_loss=True, num_epochs=100000, checkpoint_freq=500):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f"--- Large Scale High-Leverage Training ---")
+    print(f"--- Large Scale High-Leverage Training (Target: {num_epochs} Epochs) ---")
     print(f"Device: {device}")
 
     num_nodes = 8
@@ -30,12 +30,11 @@ def train(dry_run=False, use_topo_loss=True):
     config = {
         "num_nodes": num_nodes, "node_dim": node_dim, "edge_dim": edge_dim,
         "num_layers": num_layers, "lr": 0.0001, "weight_decay": 0.01,
-        "topo_weight": 0.1, "spectral_weight": 0.05
+        "topo_weight": 0.1, "spectral_weight": 0.05, "target_epochs": num_epochs
     }
 
     try:
         model = DeepSheafNetwork(num_nodes, edges, node_dim, edge_dim, num_layers=num_layers, layer_type='nca').to(device)
-        # Immediate check for CUDA compatibility
         if device.type == 'cuda':
             dummy = torch.randn(1, num_nodes, node_dim).to(device)
             model(dummy)
@@ -49,8 +48,7 @@ def train(dry_run=False, use_topo_loss=True):
         else:
             raise e
 
-    logger = WandbLogger(project_name="topo-neural-high-leverage", config=config)
-
+    logger = WandbLogger(project_name="topo-neural-ultra-long", config=config)
     scaler = torch.amp.GradScaler(device.type, enabled=(device.type == 'cuda'))
 
     print("Initializing from Multiple Manifolds...")
@@ -68,7 +66,7 @@ def train(dry_run=False, use_topo_loss=True):
     ).to(device)
 
     optimizer = optim.AdamW(list(model.parameters()) + list(output_head.parameters()), lr=config["lr"], weight_decay=config["weight_decay"])
-    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=10)
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100) # Longer cycle for 100k
     criterion = nn.BCEWithLogitsLoss()
 
     report_file = 'TRAINING_REPORT.jsonl'
@@ -79,11 +77,12 @@ def train(dry_run=False, use_topo_loss=True):
         print(f"Dataloader failed: {e}. Using dummy data.")
         dataloader = [(torch.randn(10, 8), torch.randint(0, 2, (10, 8)).float())]
 
-    num_epochs = 10 if not dry_run else 1
+    actual_epochs = num_epochs if not dry_run else 2
     best_leverage = -1
+    early_stop_counter = 0
 
     print("Starting Epochs...")
-    for epoch in range(num_epochs):
+    for epoch in range(actual_epochs):
         model.train()
         total_loss, total_ber, correct, total = 0, 0, 0, 0
 
@@ -110,6 +109,10 @@ def train(dry_run=False, use_topo_loss=True):
                 else:
                     loss = main_loss
 
+            if torch.isnan(loss):
+                print(f"NaN loss detected at epoch {epoch}. Stopping.")
+                return
+
             scaler.scale(loss).backward()
             grad_norm = monitor_model_health(model)
             if device.type == 'cuda': scaler.unscale_(optimizer)
@@ -133,13 +136,28 @@ def train(dry_run=False, use_topo_loss=True):
 
         metrics = {"epoch": epoch, "loss": total_loss / len(dataloader), "accuracy": avg_acc, "ber": avg_ber, "leverage": leverage, "grad_norm": grad_norm}
         logger.log(metrics)
-        with open(report_file, 'a') as f: f.write(json.dumps(metrics) + '\n')
-        print(f"Epoch {epoch}: Loss={metrics['loss']:.4f}, Acc={avg_acc:.2%}, BER={avg_ber:.4f}, Leverage={leverage:.4f}")
 
-        if leverage > best_leverage and not dry_run:
+        if epoch % 10 == 0 or dry_run:
+            with open(report_file, 'a') as f: f.write(json.dumps(metrics) + '\n')
+            print(f"Epoch {epoch}: Loss={metrics['loss']:.4f}, Acc={avg_acc:.2%}, Leverage={leverage:.4f}")
+
+        # Checkpointing
+        if leverage > best_leverage:
             best_leverage = leverage
+            early_stop_counter = 0
+            if not dry_run:
+                handle = os.environ.get('KAGGLE_MODEL_HANDLE')
+                if handle: save_and_push_to_hub(model, optimizer, epoch, metrics, handle, local_dir='best_checkpoint')
+        else:
+            early_stop_counter += 1
+
+        if epoch % checkpoint_freq == 0 and not dry_run:
             handle = os.environ.get('KAGGLE_MODEL_HANDLE')
-            if handle: save_and_push_to_hub(model, optimizer, epoch, metrics, handle)
+            if handle: save_and_push_to_hub(model, optimizer, epoch, metrics, handle, local_dir=f'epoch_{epoch}_checkpoint')
+
+        if early_stop_counter > 5000 and not dry_run: # Patience for 100k epochs
+            print(f"Early stopping at epoch {epoch}")
+            break
 
     logger.finish()
     print("High-Leverage Model Training Complete.")
