@@ -5,3 +5,15 @@ checkpoint/
 TRAINING_REPORT.jsonl
 wandb/
 .kaggle/
+extracted_assets_liabilities.csv
+*.npy
+*.log
+file_list.txt
+manifold_count.txt
+current_files.txt
+financial_manifold_state.json
+manifold_state.json
+summary.txt
+extraction_summary.txt
+training_output.txt
+run.log
