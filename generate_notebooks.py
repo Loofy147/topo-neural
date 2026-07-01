@@ -19,7 +19,7 @@ def create_training_notebook():
     nb = nbf.v4.new_notebook()
     add_metadata(nb)
 
-    nb.cells.append(nbf.v4.new_markdown_cell("# Unified Topology NCA & ARC Manifold Reasoning\nHigh-leverage training suite with autonomous manifold evolution, financial tasks, and ARC solving."))
+    nb.cells.append(nbf.v4.new_markdown_cell("# Unified Topology NCA & ARC Manifold Reasoning v4\nEnhanced autonomous reasoning with Neural Agents and CGCE."))
 
     nb.cells.append(nbf.v4.new_code_cell("""
 %%bash
@@ -42,39 +42,36 @@ os.makedirs('kaggle_data', exist_ok=True)
     scripts = [
         'monitoring_utils.py', 'data_utils.py', 'kaggle_utils.py', 'kaggle_hub_manager.py',
         'weights_loader.py', 'sheaf_nn.py', 'topo_torch.py', 'spectral_topo.py',
-        'train_high_leverage.py', 'autonomous_manifold_v3.py', 'hybrid_solver.py',
+        'train_high_leverage.py', 'cgce.py', 'autonomous_manifold_v4.py', 'hybrid_solver.py',
         'financial_data_utils.py', 'extract_financials.py', 'populate_financial_manifold.py',
         'train_financial_leverage.py', 'arc_manifold_solver.py'
     ]
     for script in scripts:
         nb.cells.append(nbf.v4.new_code_cell(f"%%writefile {script}\n{read_file_content(script)}"))
 
-    nb.cells.append(nbf.v4.new_markdown_cell("## Population of Financial Manifold\nExtracting assets and liabilities."))
+    nb.cells.append(nbf.v4.new_markdown_cell("## Population of Financial Manifold"))
     nb.cells.append(nbf.v4.new_code_cell("!python3 extract_financials.py\n!python3 populate_financial_manifold.py"))
 
-    nb.cells.append(nbf.v4.new_markdown_cell("## ARC Manifold Reasoning\nDemonstrating autonomous reasoning on a sample ARC task."))
+    nb.cells.append(nbf.v4.new_markdown_cell("## ARC Manifold Reasoning v4"))
     nb.cells.append(nbf.v4.new_code_cell("""
-from arc_manifold_solver import ARCManifoldSolverV2
+from arc_manifold_solver import ARCManifoldSolverV3
 import json
 
 sample_task = {
     "train": [{"input": [[1, 1], [0, 0]], "output": [[0, 0], [1, 1]]}],
     "test": [{"input": [[1, 0], [1, 0]]}]
 }
-solver = ARCManifoldSolverV2()
-prediction = solver.solve_task("sample_0", sample_task)
-print(f"Sample Prediction: {json.dumps(prediction, indent=2)}")
+solver = ARCManifoldSolverV3()
+prediction = solver.solve_task("sample_v4", sample_task)
+print(f"V4 Prediction: {json.dumps(prediction, indent=2)}")
 """.strip()))
-
-    nb.cells.append(nbf.v4.new_markdown_cell("## Financial Asset-Liability Training"))
-    nb.cells.append(nbf.v4.new_code_cell("from train_financial_leverage import train as train_financial\ntrain_financial(dry_run=True)"))
 
     with open('Training_Full_Pipeline.ipynb', 'w') as f: nbf.write(nb, f)
 
 def create_assessment_notebook():
     nb = nbf.v4.new_notebook(); add_metadata(nb)
     nb.cells.append(nbf.v4.new_markdown_cell("# Assessment and Improvement"))
-    nb.cells.append(nbf.v4.new_code_cell("!python3 hybrid_solver.py"))
+    nb.cells.append(nbf.v4.new_code_cell("!python3 arc_manifold_solver.py"))
     with open('Assessment_and_Improvement.ipynb', 'w') as f: nbf.write(nb, f)
 
 if __name__ == '__main__':
