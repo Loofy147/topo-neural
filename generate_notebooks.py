@@ -30,9 +30,9 @@ pip install --upgrade kaggle kagglehub wandb pandas numpy
 
     nb.cells.append(nbf.v4.new_code_cell("""
 import os
-os.environ['KAGGLE_API_TOKEN'] = 'KGAT_453cfb028676f79df571e5b2a8ee6afd'
+os.environ['KAGGLE_API_TOKEN'] = os.environ.get('KAGGLE_API_TOKEN', '')
 os.environ['KAGGLE_USERNAME'] = 'hichambedrani'
-os.environ['KAGGLE_KEY'] = 'KGAT_453cfb028676f79df571e5b2a8ee6afd'
+os.environ['KAGGLE_KEY'] = os.environ.get('KAGGLE_KEY', '')
 
 os.makedirs('kaggle_data', exist_ok=True)
 !mkdir -p kaggle_data/sec_financials
